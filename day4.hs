@@ -1,7 +1,5 @@
 import Data.List (tails, transpose)
 
-newtype Matrix a = Matrix [[a]] deriving (Show)
-
 get3x3 :: [[a]] -> Int -> Int -> [[a]]
 get3x3 xs y x = map (take 3 . drop x) (take 3 $ drop y xs)
 
@@ -15,7 +13,7 @@ diagonals =
     <*> transpose . zipWith drop [1 ..] . transpose
 
 windows :: Int -> [a] -> [[a]]
-windows n xs = zipWith (const id) (drop (n - 1) xs) (map (take n) (tails xs))
+windows n xs = drop 1 (map (take n) (tails xs))
 
 validMat :: [[Char]] -> Int
 validMat xs = sum (map f xs) + sum (map f (transpose xs)) + g xs + g (rotate xs)
@@ -25,7 +23,7 @@ validMat xs = sum (map f xs) + sum (map f (transpose xs)) + g xs + g (rotate xs)
     valid x = x == "XMAS" || x == "SAMX"
 
 xmas :: [[Char]] -> Bool
-xmas xs = all valid [diagonals xs !! 2, diagonals (rotate xs) !! 2]
+xmas xs = all (valid . (!! 2) . diagonals) [xs, rotate xs]
   where
     valid x = x == "MAS" || x == "SAM"
 

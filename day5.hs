@@ -1,5 +1,5 @@
 import Data.Bifunctor (Bifunctor (bimap))
-import Data.List (nub, sortBy, (\\))
+import Data.List (sortBy, (\\))
 
 type Rel = [(Int, Int)]
 
